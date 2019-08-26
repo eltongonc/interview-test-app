@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import store from '../assets/scripts/store';
@@ -26,7 +25,7 @@ class PostList extends React.Component {
 		store.subscribe(() => {
 			this.setState({
 				posts: store.getState().posts.posts,
-			})
+			});
 		});
 	}
 
@@ -39,12 +38,10 @@ class PostList extends React.Component {
 	}
 }
 
-PostList.propTypes = {};
-
 const mapPropsToState = (state)=> {
 	return {
 		...state
-	}
+	};
 };
 
 export default connect(mapPropsToState)(PostList);
