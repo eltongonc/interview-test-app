@@ -1,20 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
  
-class Post extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-	render() {
-		return (
-			<div>
-				<p>Post</p>
+function Post({title, children}) {
+	return (
+		<div className="post">
+			<div className="post__inner">
+				<h4 className="post__title">{title}</h4>
+				<p className="post__body" dangerouslySetInnerHTML={{__html: children}}></p>
 			</div>
-		);
-	}
+		</div>
+	);
 }
 
-Post.propTypes = {};
+Post.propTypes = {
+	title: PropTypes.string,
+	children: PropTypes.any,
+};
 
 export default Post;

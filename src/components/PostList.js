@@ -1,45 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import store from '../assets/scripts/store';
+
 import Post from './Post';
-import { getPosts, getImages } from '../assets/scripts/helpers';
  
 class PostList extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.generatePosts = this.generatePosts.bind(this);
+		this.state = {
+			posts: [],
+			index: 0,
+		};	
+
+		this.displayPosts = this.displayPosts.bind(this);
 	}
 
-	generatePosts() {
-		const posts = [];
-		
-		getPosts((err, data) => {
-			if(err) {
-				console.log(err);
-			} else {
-				console.log(data);
-			}
-		});
-		getImages(100, (err, data) => {
-			if(err) {
-				console.log(err);
-			} else {
-				console.log(data);
-			}
-		});
-		
-		// generate 20 posts
-		for (let i = 0; i < 20; i++) {
-			posts.push(<Post key={i}/>);
-		}
+	displayPosts() {
+		return this.state.posts.map((post, i) => <Post key={i} title={post.title}>{post.body}</Post>);
+	}
 
-		return posts;
+	componentDidMount() {
+		store.subscribe(() => {
+			this.setState({
+				posts: store.getState().posts.posts,
+			})
+		});
 	}
 
 	render() {
 		return (
-			<div>
-				{this.generatePosts()}
+			<div className="post-list">
+				{this.displayPosts()}
 			</div>
 		);
 	}
@@ -47,4 +41,10 @@ class PostList extends React.Component {
 
 PostList.propTypes = {};
 
-export default PostList;
+const mapPropsToState = (state)=> {
+	return {
+		...state
+	}
+};
+
+export default connect(mapPropsToState)(PostList);
