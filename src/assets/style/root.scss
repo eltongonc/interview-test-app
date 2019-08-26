@@ -1,5 +1,7 @@
 //General
+@import "./vars.scss";
 @import "./reset.scss";
 
 // Components
-@import "./app.scss";
+@import "./header.scss";
+@import "./post.scss";

@@ -1,0 +1,24 @@
+.post-list {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	max-width: $col-xl;
+	margin: 0 auto;
+	.post {
+		max-width: 20rem;
+		border: solid #edededed;
+		border-radius: 5px;
+		margin: .5rem;
+		.post__inner {
+			padding: 1rem;
+			.post__title {
+				margin-bottom: .5rem;
+			}
+			.post__body {}
+		}
+	}
+
+	button {
+		width: 20rem;
+	}
+}

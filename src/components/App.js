@@ -1,25 +1,42 @@
 import React from 'react';
-import logo from '../assets/images/logo.svg';
+import store from '../assets/scripts/store';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Header from './Header';
+import PostList from './PostList';
+import { getPosts, getImages } from '../assets/scripts/helpers';
+import { setPosts, saveImages } from '../reducers/posts/actions';
+
+class App extends React.Component {
+  componentDidMount() {
+    
+    getPosts((err, data) => {
+      if(err) {
+        console.log(err);
+      } else {
+        store.dispatch(
+          setPosts(data)
+        );
+      }
+    });
+    getImages(100, (err, data) => {
+      if(err) {
+        console.log(err);
+      } else {
+        store.dispatch(
+          saveImages(data)
+        );
+      }
+    });
+  }
+  render() {
+    return (
+      <div className="App">
+        <Header/>
+        <PostList/>
+      </div>
+    );
+  }
 }
+
 
 export default App;
