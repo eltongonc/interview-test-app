@@ -8,13 +8,19 @@ class Post extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<p>Post</p>
+			<div className="post">
+				<div className="post__inner">
+					<h4 className="post__title">{this.props.title}</h4>
+					<p className="post__body">{this.props.children}</p>
+				</div>
 			</div>
 		);
 	}
 }
 
-Post.propTypes = {};
+Post.propTypes = {
+	title: PropTypes.string,
+	children: PropTypes.any,
+};
 
 export default Post;
