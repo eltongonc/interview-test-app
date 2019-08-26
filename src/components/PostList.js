@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Post from './Post';
+import { getPosts } from '../assets/scripts/helpers';
  
 class PostList extends React.Component {
 	constructor(props) {
@@ -10,11 +11,20 @@ class PostList extends React.Component {
 	}
 
 	generatePosts() {
+		getPosts((err, data) => {
+			if(err) {
+				console.log(err);
+			} else {
+				console.log(data);
+			}
+		});
+		
 		const posts = [];
+
 
 		// generate 20 posts
 		for (let i = 0; i < 20; i++) {
-			posts.push(<Post/>);
+			posts.push(<Post key={i}/>);
 		}
 
 		return posts;
