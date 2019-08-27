@@ -78,7 +78,7 @@ export function getImages(amount, callback) {
 export function getComments(id, callback) {
 	axios({
 		method: 'GET',
-		url: `${API.commentsUrl}/${id}`
+		url: `${API.commentsUrl}?postId=${id}`
 	}).then((res) => {
 		if (callback) {
 			callback(null, res.data);
