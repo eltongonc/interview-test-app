@@ -18,7 +18,7 @@ class PostList extends React.Component {
 	}
 
 	displayPosts() {
-		return this.state.posts.map((post, i) => <Post key={i} title={post.title}>{post.body}</Post>);
+		return this.state.posts.map((post, i) => <Post key={i} title={post.title} data={post}>{post.body}</Post>);
 	}
 
 	componentDidMount() {
@@ -30,15 +30,23 @@ class PostList extends React.Component {
 	}
 
 	render() {
+		if (this.state.posts) {
+			return (
+				<div className="post-list">
+					{this.displayPosts()}
+				</div>
+			);
+		}
+
 		return (
 			<div className="post-list">
-				{this.displayPosts()}
+				<h1>Loading posts...</h1>
 			</div>
 		);
 	}
 }
 
-const mapPropsToState = (state)=> {
+const mapPropsToState = (state) => {
 	return {
 		...state
 	};
