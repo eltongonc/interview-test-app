@@ -11,6 +11,7 @@ class PostList extends React.Component {
 
 		this.state = {
 			posts: [],
+			images: [],
 			index: 0,
 		};	
 
@@ -18,27 +19,48 @@ class PostList extends React.Component {
 	}
 
 	displayPosts() {
-		return this.state.posts.map((post, i) => <Post key={i} title={post.title}>{post.body}</Post>);
+		const posts = this.state.posts.reduce((result, post, i) => {
+			const postImg = this.state.images[i];
+			
+			post.image = postImg;
+
+			result.push(
+				<Post key={i} title={post.title} data={post}>{post.body}</Post>
+			);
+
+			return result;
+		}, []);
+
+		return posts;
 	}
 
 	componentDidMount() {
 		store.subscribe(() => {
 			this.setState({
 				posts: store.getState().posts.posts,
+				images: store.getState().posts.images,
 			});
 		});
 	}
 
 	render() {
+		if (this.state.posts && this.state.images) {
+			return (
+				<div className="post-list">
+					{this.displayPosts()}
+				</div>
+			);
+		}
+
 		return (
 			<div className="post-list">
-				{this.displayPosts()}
+				<h1>Loading posts...</h1>
 			</div>
 		);
 	}
 }
 
-const mapPropsToState = (state)=> {
+const mapPropsToState = (state) => {
 	return {
 		...state
 	};

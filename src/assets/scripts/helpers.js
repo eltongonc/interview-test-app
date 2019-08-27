@@ -9,6 +9,7 @@ export const API = {
 	photos_url: `${BASE_URL}/photos/`,
 	posts_url: `${BASE_URL}/posts/`,
 	comments_url: `${BASE_URL}/comments/`,
+	user_url: `${BASE_URL}/user/`,
 };
 
 
@@ -19,7 +20,7 @@ export const API = {
 export function getPosts(callback) {
 	axios({
 		method: 'GET',
-		url: API.posts_url
+		url: API.posts_url + '?_limit=10',
 	}).then((res) => {
 		if (callback) {
 			callback(null, res.data);
@@ -39,7 +40,7 @@ export function getPosts(callback) {
 export function getImages(amount, callback) {
 	axios({
 		method: 'GET',
-		url: `${API.photos_url}?_limit=${amount}`
+		url: `${API.photos_url}?_limit=${10}`
 	}).then((res) => {
 		if (callback) {
 			callback(null, res.data);

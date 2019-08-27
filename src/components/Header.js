@@ -1,12 +1,17 @@
 import React from 'react';
-import logo from '../assets/images/logo.svg';
- 
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
 function Header() {
 	return (
-		<header className="header">
-			<img src={logo} className="header__logo" alt="logo" />
-			<h1>Interview test app</h1>
-		</header>
+		<AppBar position="static">
+			<Toolbar>
+				<Typography variant="h6">
+				Interview test app
+				</Typography>
+			</Toolbar>
+		</AppBar>
 	);
 }
 
