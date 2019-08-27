@@ -9,11 +9,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-
-import ShareIcon from '@material-ui/icons/Share';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
+
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import CommentIcon from '@material-ui/icons/Comment';
 
 
 const useStyles = makeStyles(theme => ({
@@ -25,19 +24,13 @@ const useStyles = makeStyles(theme => ({
 
 function Post({title, children, data}) {
 	const classes = useStyles();
-	console.log(data);
-	
 	return (
 		<Card className="post">
 			<CardHeader
 				avatar={
 					<Avatar aria-label="recipe">{data.id}</Avatar>
 				}
-				action={
-					<IconButton aria-label="settings">
-						<MoreVertIcon />
-					</IconButton>
-				}
+				
 				title={title}
 				subheader="September 14, 2016"
 			/>
@@ -52,11 +45,8 @@ function Post({title, children, data}) {
 				</Typography>
 			</CardContent>
 			<CardActions disableSpacing>
-				<IconButton aria-label="add to favorites">
-					<FavoriteIcon />
-				</IconButton>
 				<IconButton aria-label="share">
-					<ShareIcon />
+					<CommentIcon />
 				</IconButton>
 			</CardActions>
 		</Card>
