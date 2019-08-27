@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
+
+import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -11,12 +12,19 @@ import IconButton from '@material-ui/core/IconButton';
 
 import ShareIcon from '@material-ui/icons/Share';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
-import Collapse from '@material-ui/core/Collapse';
- 
+
+
+const useStyles = makeStyles(theme => ({
+	media: {
+		height: 0,
+		paddingTop: '56.25%', // 16:9
+	}
+}));
+
 function Post({title, children, data}) {
+	const classes = useStyles();
 	console.log(data);
 	
 	return (
@@ -34,7 +42,8 @@ function Post({title, children, data}) {
 				subheader="September 14, 2016"
 			/>
 			<CardMedia
-				image="/static/images/cards/paella.jpg"
+				className={classes.media}
+				image={data.image.url}
 				title="Paella dish"
 			/>
 			<CardContent>
