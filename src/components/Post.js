@@ -38,7 +38,7 @@ function Post({title, children, data}) {
 				<CardMedia
 					className={classes.media}
 					image={data.image.url}
-					title="Paella dish"
+					title={data.image.title}
 				/>
 				:
 				null
