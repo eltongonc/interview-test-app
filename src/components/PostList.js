@@ -8,6 +8,7 @@ import store from '../assets/scripts/store';
 import Post from './Post';
 import { getPosts } from '../assets/scripts/helpers';
 import { setPosts } from '../reducers/posts/actions';
+import { Container } from '@material-ui/core';
  
 class PostList extends React.Component {
 	constructor(props) {
@@ -54,13 +55,13 @@ class PostList extends React.Component {
 	render() {
 		if (this.state.posts.length > 0) {
 			return (
-				<div className="post-list">
+				<Container className="post-list">
 					{this.displayPosts()}
 
 					<Button ref={(r)=> this.moreBtn = r} onClick={this.loadMorePosts} variant="contained" color="secondary">
 						Load more
 					</Button>
-				</div>
+				</Container>
 			);
 		}
 

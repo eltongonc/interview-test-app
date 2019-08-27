@@ -13,10 +13,9 @@ import Container from '@material-ui/core/Container';
 
 class App extends React.Component {
 	componentDidMount() {
-    
 		/**
-     * Load 20 post at first
-     */
+		 * Load 20 post at first
+		 */
 		getPosts(20, (err, data) => {
 			if(err) {
 				console.log(err);
@@ -32,9 +31,7 @@ class App extends React.Component {
 			<div className="App">
 				<Header/>
 				<Toolbar id="back-to-top-anchor" />
-				<Container>
-					<PostList/>
-				</Container>
+				<PostList/>
 				<ScrollTop {...this.props}>
 					<Fab color="secondary" size="small" aria-label="scroll back to top">
 						<KeyboardArrowUpIcon />

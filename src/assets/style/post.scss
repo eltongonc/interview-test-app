@@ -1,5 +1,8 @@
 .post-list {
 	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
 	.post {
 		max-width: 38rem;
 		margin: 1rem auto;
@@ -7,5 +10,8 @@
 
 	button {
 		width: 100%;
+		max-width: 38rem;
+		margin: 0 auto;
+		justify-self: center;
 	}
 }
