@@ -93,7 +93,7 @@ class SpringModal extends React.Component {
 		return this.state.data.map((comment, i) => {
 			return <ListItem key={i} className="comment">
 				<ListItemAvatar>
-					<Avatar>R</Avatar>
+					<Avatar>{comment.id}</Avatar>
 				</ListItemAvatar>
 				<ListItemText className="modal__text" primary={comment.name} secondary={comment.body} />
 			</ListItem>;
