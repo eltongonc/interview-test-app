@@ -1,6 +1,11 @@
 .post-list {
+	margin-bottom: 1rem;
 	.post {
 		max-width: 38rem;
 		margin: 1rem auto;
+	}
+
+	button {
+		width: 100%;
 	}
 }
