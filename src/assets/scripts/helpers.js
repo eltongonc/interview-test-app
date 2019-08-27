@@ -6,10 +6,11 @@ const BASE_URL = 'https://jsonplaceholder.typicode.com';
  * API object
  */
 export const API = {
-	photos_url: `${BASE_URL}/photos/`,
-	posts_url: `${BASE_URL}/posts/`,
-	comments_url: `${BASE_URL}/comments/`,
-	user_url: `${BASE_URL}/user/`,
+	photosUrl: `${BASE_URL}/photos/`,
+	postsUrl: `${BASE_URL}/posts/`,
+	commentsUrl: `${BASE_URL}/comments/`,
+	userUrl: `${BASE_URL}/user/`,
+	startAt: 0,
 };
 
 
@@ -17,14 +18,30 @@ export const API = {
  * This function will call the api and get n amount of posts
  * @param {function} callback a function that will return the data or an error
  */
-export function getPosts(callback) {
+export function getPosts(amount, callback) {
 	axios({
 		method: 'GET',
-		url: API.posts_url + '?_limit=10',
+		url: `${API.postsUrl}?_start=${API.startAt}&_limit=${amount}`
 	}).then((res) => {
-		if (callback) {
-			callback(null, res.data);
-		}
+		getImages(amount, (err, data) => {
+			if(err) {
+				console.log(err);
+			} else {
+				res.data = res.data.reduce((result, post, i) => {
+					const postImg = data[i];
+					post.image = postImg;
+
+					result.push(post);
+					return result;
+				}, []);
+
+				if (callback) {
+					callback(null, res.data);
+				}
+
+				API.startAt += amount;
+			}
+		});
 	}).catch((err) => {
 		if (callback) {
 			callback(err, null);
@@ -40,7 +57,28 @@ export function getPosts(callback) {
 export function getImages(amount, callback) {
 	axios({
 		method: 'GET',
-		url: `${API.photos_url}?_limit=${10}`
+		url: `${API.photosUrl}?_start=${API.startAt}&_limit=${amount}`
+	}).then((res) => {
+		if (callback) {
+			callback(null, res.data);
+		}
+	}).catch((err) => {
+		if (callback) {
+			callback(err, null);
+		}
+	});
+}
+
+
+/**
+ * This function gets all the comments from a post
+ * @param {number} id The id of the post
+ * @param {function} callback A function that will return the data or an error
+ */
+export function getComments(id, callback) {
+	axios({
+		method: 'GET',
+		url: `${API.commentsUrl}/${id}`
 	}).then((res) => {
 		if (callback) {
 			callback(null, res.data);

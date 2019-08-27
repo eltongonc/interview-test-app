@@ -5,9 +5,3 @@ export function setPosts(posts) {
 		posts,
 	};
 }
-export function saveImages(images) {
-	return {
-		type: 'SET_IMAGES',
-		images,
-	};
-}

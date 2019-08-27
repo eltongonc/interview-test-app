@@ -1,9 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Button from '@material-ui/core/Button';
+
 import store from '../assets/scripts/store';
 
 import Post from './Post';
+import { getPosts } from '../assets/scripts/helpers';
+import { setPosts } from '../reducers/posts/actions';
  
 class PostList extends React.Component {
 	constructor(props) {
@@ -11,43 +15,51 @@ class PostList extends React.Component {
 
 		this.state = {
 			posts: [],
-			images: [],
 			index: 0,
 		};	
 
 		this.displayPosts = this.displayPosts.bind(this);
+		this.loadMorePosts = this.loadMorePosts.bind(this);
 	}
 
 	displayPosts() {
-		const posts = this.state.posts.reduce((result, post, i) => {
-			const postImg = this.state.images[i];
-			
-			post.image = postImg;
+		return this.state.posts.map((post, i) => {
+			return <Post key={i} title={post.title} data={post}>{post.body}</Post>
+		});
+	}
 
-			result.push(
-				<Post key={i} title={post.title} data={post}>{post.body}</Post>
-			);
-
-			return result;
-		}, []);
-
-		return posts;
+	loadMorePosts() {
+		getPosts(20, (err, data) => {
+			if(err) {
+				console.log(err);
+			} else {
+				// console.log(this.moreBtn);
+				
+				this.moreBtn.blur();
+				store.dispatch(
+					setPosts(data)
+				);
+			}
+		});
 	}
 
 	componentDidMount() {
 		store.subscribe(() => {
 			this.setState({
-				posts: store.getState().posts.posts,
-				images: store.getState().posts.images,
+				posts: store.getState().posts,
 			});
 		});
 	}
 
 	render() {
-		if (this.state.posts && this.state.images) {
+		if (this.state.posts.length > 0) {
 			return (
 				<div className="post-list">
 					{this.displayPosts()}
+
+					<Button ref={(r)=> this.moreBtn = r} onClick={this.loadMorePosts} variant="contained" color="secondary">
+						Load more
+					</Button>
 				</div>
 			);
 		}

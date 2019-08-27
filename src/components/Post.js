@@ -11,7 +11,6 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CommentIcon from '@material-ui/icons/Comment';
 
 
@@ -34,11 +33,16 @@ function Post({title, children, data}) {
 				title={title}
 				subheader="September 14, 2016"
 			/>
-			<CardMedia
-				className={classes.media}
-				image={data.image.url}
-				title="Paella dish"
-			/>
+			
+			{data.image ? 
+				<CardMedia
+					className={classes.media}
+					image={data.image.url}
+					title={data.image.title}
+				/>
+				:
+				null
+			}
 			<CardContent>
 				<Typography variant="body2" color="textSecondary" component="p">
 					{children}
