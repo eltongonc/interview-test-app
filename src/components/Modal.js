@@ -13,6 +13,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
+import CloseIcon from '@material-ui/icons/Close';
 
 
 const styles = theme => ({
@@ -94,7 +95,7 @@ class SpringModal extends React.Component {
 				<ListItemAvatar>
 					<Avatar>R</Avatar>
 				</ListItemAvatar>
-				<ListItemText primary={comment.name} secondary={comment.body} />
+				<ListItemText className="modal__text" primary={comment.name} secondary={comment.body} />
 			</ListItem>;
 		});
 	}
@@ -112,14 +113,14 @@ class SpringModal extends React.Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div className="modal">
+			<div className="modal-wrapper">
 				<IconButton onClick={this.handleOpen} aria-label="share">
 					<CommentIcon />
 				</IconButton>
 				<Modal
 					aria-labelledby="spring-modal-title"
 					aria-describedby="spring-modal-description"
-					className={classes.modal}
+					className={'modal ' + classes.modal}
 					open={this.state.open}
 					onClose={this.handleClose}
 					closeAfterTransition
@@ -129,7 +130,10 @@ class SpringModal extends React.Component {
 					}}
 				>
 					<Fade in={this.state.open}>
-						<List className={classes.paper}>
+						<IconButton className="close-button" onClick={this.handleClose} aria-label="share">
+							<CloseIcon />
+						</IconButton>
+						<List className={'modal__list ' + classes.paper}>
 							{this.generateComments()}
 						</List>
 					</Fade>
