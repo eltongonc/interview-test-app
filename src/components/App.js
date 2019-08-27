@@ -3,39 +3,30 @@ import store from '../assets/scripts/store';
 
 import Header from './Header';
 import PostList from './PostList';
-import { getPosts, getImages } from '../assets/scripts/helpers';
-import { setPosts, saveImages } from '../reducers/posts/actions';
+import { getPosts } from '../assets/scripts/helpers';
+import { setPosts } from '../reducers/posts/actions';
 
 class App extends React.Component {
-  componentDidMount() {
+	componentDidMount() {
     
-    getPosts((err, data) => {
-      if(err) {
-        console.log(err);
-      } else {
-        store.dispatch(
-          setPosts(data)
-        );
-      }
-    });
-    getImages(100, (err, data) => {
-      if(err) {
-        console.log(err);
-      } else {
-        store.dispatch(
-          saveImages(data)
-        );
-      }
-    });
-  }
-  render() {
-    return (
-      <div className="App">
-        <Header/>
-        <PostList/>
-      </div>
-    );
-  }
+		getPosts(20, (err, data) => {
+			if(err) {
+				console.log(err);
+			} else {
+				store.dispatch(
+					setPosts(data)
+				);
+			}
+		});
+	}
+	render() {
+		return (
+			<div className="App">
+				<Header/>
+				<PostList/>
+			</div>
+		);
+	}
 }
 
 
