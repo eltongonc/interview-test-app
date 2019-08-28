@@ -9,7 +9,6 @@ import PostList from './PostList';
 import { getPosts } from '../assets/scripts/helpers';
 import { setPosts } from '../reducers/posts/actions';
 import ScrollTop from './ScrollTop';
-import Container from '@material-ui/core/Container';
 
 class App extends React.Component {
 	componentDidMount() {

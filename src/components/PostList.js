@@ -50,6 +50,17 @@ class PostList extends React.Component {
 				posts: store.getState().posts,
 			});
 		});
+
+
+		// detect scroll
+		document.addEventListener('scroll', () => {
+			let pageHeight = document.body.offsetHeight;
+			let scroll = window.innerHeight + window.scrollY;
+
+			if (scroll >= pageHeight && this.state.posts.length !== 100) {
+				this.loadMorePosts();
+			}
+		});
 	}
 
 	render() {
@@ -58,9 +69,13 @@ class PostList extends React.Component {
 				<Container className="post-list">
 					{this.displayPosts()}
 
-					<Button ref={(r)=> this.moreBtn = r} onClick={this.loadMorePosts} variant="contained" color="secondary">
-						Load more
-					</Button>
+					{
+						this.state.posts.length !== 100 ?
+							<Button ref={(r)=> this.moreBtn = r} onClick={this.loadMorePosts} variant="contained" color="secondary">
+								Load more
+							</Button> :
+							null
+					}
 				</Container>
 			);
 		}
