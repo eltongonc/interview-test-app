@@ -89,3 +89,31 @@ export function getComments(id, callback) {
 		}
 	});
 }
+
+
+/**
+ * Styles used by the Material UI library
+ * @param {*} theme 
+ */
+export function styles(theme) {
+	return {
+		media: {
+			height: 0,
+			paddingTop: '56.25%', // 16:9
+		},
+		modal: {
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+		},
+		paper: {
+			backgroundColor: theme.palette.background.paper,
+			boxShadow: theme.shadows[1],
+		},
+		root: {
+			position: 'fixed',
+			bottom: theme.spacing(2),
+			right: theme.spacing(2),
+		},
+	};
+}

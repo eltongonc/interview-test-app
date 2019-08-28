@@ -14,19 +14,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
 import CloseIcon from '@material-ui/icons/Close';
+import { styles } from '../assets/scripts/helpers';
 
-
-const styles = theme => ({
-	modal: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	paper: {
-		backgroundColor: theme.palette.background.paper,
-		boxShadow: theme.shadows[1],
-	},
-});
 
 const Fade = React.forwardRef(function Fade(props, ref) {
 	const { in: open, children, onEnter, onExited, ...other } = props;

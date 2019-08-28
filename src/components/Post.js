@@ -10,15 +10,9 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 
-import { getComments } from '../assets/scripts/helpers';
+import { getComments, styles } from '../assets/scripts/helpers';
 import SpringModal from './Modal';
 
-const styles = theme => ({
-	media: {
-		height: 0,
-		paddingTop: '56.25%', // 16:9
-	}
-});
 
 class Post extends React.Component {
 	constructor(props) {
@@ -51,7 +45,7 @@ class Post extends React.Component {
 					}
 					
 					title={title}
-					subheader="September 14, 2016"
+					subheader="Augustus 28, 2018"
 				/>
 				
 				{data.image ? 

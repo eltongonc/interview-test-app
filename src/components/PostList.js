@@ -24,8 +24,8 @@ class PostList extends React.Component {
 	}
 
 	displayPosts() {
-		return this.state.posts.map((post, i) => {
-			return <Post key={i} title={post.title} data={post}>{post.body}</Post>
+		return this.props.posts.map((post, i) => {
+			return <Post key={i} title={post.title} data={post}>{post.body}</Post>;
 		});
 	}
 
@@ -33,9 +33,7 @@ class PostList extends React.Component {
 		getPosts(20, (err, data) => {
 			if(err) {
 				console.log(err);
-			} else {
-				// console.log(this.moreBtn);
-				
+			} else if(this.state.posts.length !== 100) {
 				this.moreBtn.blur();
 				store.dispatch(
 					setPosts(data)
@@ -45,13 +43,8 @@ class PostList extends React.Component {
 	}
 
 	componentDidMount() {
-		store.subscribe(() => {
-			this.setState({
-				posts: store.getState().posts,
-			});
-		});
-
-
+		console.log(this);
+		
 		// detect scroll
 		document.addEventListener('scroll', () => {
 			let pageHeight = document.body.offsetHeight;
@@ -64,13 +57,13 @@ class PostList extends React.Component {
 	}
 
 	render() {
-		if (this.state.posts.length > 0) {
+		if (this.props.posts.length > 0) {
 			return (
 				<Container className="post-list">
 					{this.displayPosts()}
 
-					{
-						this.state.posts.length !== 100 ?
+					{/* The max post of the api is 100 */
+						this.props.posts.length !== 100 ?
 							<Button ref={(r)=> this.moreBtn = r} onClick={this.loadMorePosts} variant="contained" color="secondary">
 								Load more
 							</Button> :
@@ -88,10 +81,8 @@ class PostList extends React.Component {
 	}
 }
 
-const mapPropsToState = (state) => {
-	return {
-		...state
-	};
+const mapStateToProps = (state) => {
+	return {...state};
 };
 
-export default connect(mapPropsToState)(PostList);
+export default connect(mapStateToProps)(PostList);
