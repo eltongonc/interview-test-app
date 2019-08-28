@@ -27,7 +27,7 @@ class App extends React.Component {
 	}
 	render() {
 		return (
-			<div className="App">
+			<div className="app">
 				<Header/>
 				<Toolbar id="back-to-top-anchor" />
 				<PostList/>
