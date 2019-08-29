@@ -4,9 +4,10 @@ const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
 /**
  * API object
+ * Client id will be removed after a week
  */
 export const API = {
-	photosUrl: `${BASE_URL}/photos/`,
+	imagesUrl(count) { return `https://api.unsplash.com/photos/random?count=${count}&client_id=a670cd3f5fc5db92e41bcb7a248ff4cfa140256d4a70f752403bad58bc17362d`; },
 	postsUrl: `${BASE_URL}/posts/`,
 	commentsUrl: `${BASE_URL}/comments/`,
 	userUrl: `${BASE_URL}/user/`,
@@ -55,18 +56,21 @@ export function getPosts(amount, callback) {
  * @param {function} callback a function that will return the data or an error
  */
 export function getImages(amount, callback) {
+
 	axios({
 		method: 'GET',
-		url: `${API.photosUrl}?_start=${API.startAt}&_limit=${amount}`
+		url: API.imagesUrl(amount),
 	}).then((res) => {
 		if (callback) {
 			callback(null, res.data);
 		}
+		
 	}).catch((err) => {
 		if (callback) {
 			callback(err, null);
 		}
 	});
+
 }
 
 

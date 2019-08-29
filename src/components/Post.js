@@ -47,6 +47,9 @@ class Post extends React.Component {
 
 	render() {
 		const {title, children, data, classes} = this.props;
+
+		console.log(data);
+		
 		
 		return (
 			<Grow 
@@ -57,7 +60,7 @@ class Post extends React.Component {
 				<Card className="post" elevation={0}>
 					<CardHeader
 						avatar={
-							<Avatar aria-label="recipe">{data.id}</Avatar>
+							<Avatar aria-label="recipe" src={data.image.user.profile_image.medium}/>
 						}
 						
 						title={title}
@@ -67,8 +70,8 @@ class Post extends React.Component {
 					{data.image ? 
 						<CardMedia
 							className={classes.media}
-							image={data.image.url}
-							title={data.image.title}
+							image={data.image.urls.small}
+							title={data.image.alt_description}
 						/>
 						:
 						null
