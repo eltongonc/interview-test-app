@@ -1,25 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { Container } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import store from '../assets/scripts/store';
 
 import Post from './Post';
 import { getPosts } from '../assets/scripts/helpers';
 import { setPosts } from '../reducers/posts/actions';
-import { Container } from '@material-ui/core';
- 
+
+/* The max post of the api is 100 */
+const maxPosts = 100;
+
 class PostList extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			posts: [],
-			index: 0,
+			isLoading: false,
 		};	
 
 		this.displayPosts = this.displayPosts.bind(this);
+		this.displayButton = this.displayButton.bind(this);
 		this.loadMorePosts = this.loadMorePosts.bind(this);
 	}
 
@@ -29,29 +35,51 @@ class PostList extends React.Component {
 		});
 	}
 
+	displayButton() {
+		if(this.props.posts.length !== maxPosts && this.state.isLoading) {
+			return <CircularProgress className="loader" size={24} />;
+		} else if(this.props.posts.length !== maxPosts && !this.state.isLoading) {
+			return (
+				<Button 
+					onClick={this.loadMorePosts} 
+					variant="contained" 
+					color="secondary"
+					className="more-button"
+				>
+					Load more
+				</Button>
+			);
+		} 
+
+		return;
+	}
+
 	loadMorePosts() {
 		getPosts(20, (err, data) => {
 			if(err) {
 				console.log(err);
-			} else if(this.state.posts.length !== 100) {
-				this.moreBtn.blur();
-				store.dispatch(
-					setPosts(data)
-				);
+			} else if(this.state.posts.length !== maxPosts) {
+				store.dispatch( setPosts(data) );
+				this.setState({
+					isLoading: false,
+				});
 			}
 		});
 	}
 
 	componentDidMount() {
-		console.log(this);
-		
-		// detect scroll
+		// Load new post on scroll
 		document.addEventListener('scroll', () => {
-			let pageHeight = document.body.offsetHeight;
+			let pageHeight = document.body.scrollHeight;
 			let scroll = window.innerHeight + window.scrollY;
 
-			if (scroll >= pageHeight && this.state.posts.length !== 100) {
-				this.loadMorePosts();
+			if ((scroll >= pageHeight) && this.state.posts.length !== maxPosts) {
+				if (!this.state.isLoading) {
+					this.loadMorePosts();
+					this.setState({
+						isLoading: true
+					});
+				}
 			}
 		});
 	}
@@ -62,20 +90,14 @@ class PostList extends React.Component {
 				<Container className="post-list">
 					{this.displayPosts()}
 
-					{/* The max post of the api is 100 */
-						this.props.posts.length !== 100 ?
-							<Button ref={(r)=> this.moreBtn = r} onClick={this.loadMorePosts} variant="contained" color="secondary">
-								Load more
-							</Button> :
-							null
-					}
+					{this.displayButton()}
 				</Container>
 			);
 		}
 
 		return (
 			<div className="post-list">
-				<h1>Loading posts...</h1>
+				<CircularProgress className="loader" color="secondary" />
 			</div>
 		);
 	}
@@ -83,6 +105,10 @@ class PostList extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {...state};
+};
+
+PostList.propTypes = {
+	posts: PropTypes.array,
 };
 
 export default connect(mapStateToProps)(PostList);

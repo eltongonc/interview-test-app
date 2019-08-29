@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Grow from '@material-ui/core/Grow';
 
 import { getComments, styles } from '../assets/scripts/helpers';
 import SpringModal from './Modal';
@@ -17,6 +18,10 @@ import SpringModal from './Modal';
 class Post extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			checked: false,
+		};
 
 		this.showComments = this.showComments.bind(this);
 	}
@@ -34,39 +39,51 @@ class Post extends React.Component {
 		});
 	}
 
+	componentDidMount() {
+		this.setState({
+			checked: true,
+		});
+	}
+
 	render() {
 		const {title, children, data, classes} = this.props;
 		
 		return (
-			<Card className="post">
-				<CardHeader
-					avatar={
-						<Avatar aria-label="recipe">{data.id}</Avatar>
-					}
-					
-					title={title}
-					subheader="Augustus 28, 2018"
-				/>
-				
-				{data.image ? 
-					<CardMedia
-						className={classes.media}
-						image={data.image.url}
-						title={data.image.title}
+			<Grow 
+				in={this.state.checked}
+				style={{ transformOrigin: 'top center' }}
+				{...(this.state.checked ? { timeout: 1000 } : {})}
+			>
+				<Card className="post" elevation={0}>
+					<CardHeader
+						avatar={
+							<Avatar aria-label="recipe">{data.id}</Avatar>
+						}
+						
+						title={title}
+						subheader="Augustus 28, 2018"
 					/>
-					:
-					null
-				}
-				<CardContent>
-					<Typography variant="body2" color="textSecondary" component="p">
-						{children}
-					</Typography>
-				</CardContent>
-				<CardActions disableSpacing>
-					<SpringModal clickAction={this.showComments}/>
-				</CardActions>
+					
+					{data.image ? 
+						<CardMedia
+							className={classes.media}
+							image={data.image.url}
+							title={data.image.title}
+						/>
+						:
+						null
+					}
+					<CardContent>
+						<Typography variant="body2" color="textSecondary" component="p">
+							{children}
+						</Typography>
+					</CardContent>
+					<CardActions disableSpacing>
+						<SpringModal clickAction={this.showComments}/>
+					</CardActions>
 
-			</Card>
+				</Card>
+			</Grow>
 		);
 	}
 }

@@ -115,5 +115,8 @@ export function styles(theme) {
 			bottom: theme.spacing(2),
 			right: theme.spacing(2),
 		},
+		progress: {
+			margin: theme.spacing(2),
+		},
 	};
 }

@@ -9,11 +9,25 @@
 		max-width: 38rem;
 		margin: 1rem auto;
 	}
+	
+	.loader {
+		align-self: center;
+		justify-self: center;
+		margin-top: 1rem;
+	}
+	
 
-	button {
+	.more-button {
 		width: 100%;
 		max-width: 38rem;
 		margin: 0 auto;
 		justify-self: center;
+		background-color: $dark-grey
+	}
+
+	+.to-top {
+		button {
+			background-color: $dark-grey
+		}
 	}
 }

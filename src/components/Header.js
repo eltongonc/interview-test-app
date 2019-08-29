@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 function Header() {
 	return (
-		<AppBar className="header">
+		<AppBar className="header" elevation={0}>
 			<Toolbar>
 				<Typography variant="h6">
 				Interview test app
