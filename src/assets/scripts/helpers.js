@@ -4,9 +4,10 @@ const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
 /**
  * API object
+ * Client id will be removed after a week
  */
 export const API = {
-	photosUrl: `${BASE_URL}/photos/`,
+	imagesUrl(count) { return `https://api.unsplash.com/photos/random?count=${count}&client_id=a670cd3f5fc5db92e41bcb7a248ff4cfa140256d4a70f752403bad58bc17362d`; },
 	postsUrl: `${BASE_URL}/posts/`,
 	commentsUrl: `${BASE_URL}/comments/`,
 	userUrl: `${BASE_URL}/user/`,
@@ -55,18 +56,21 @@ export function getPosts(amount, callback) {
  * @param {function} callback a function that will return the data or an error
  */
 export function getImages(amount, callback) {
+
 	axios({
 		method: 'GET',
-		url: `${API.photosUrl}?_start=${API.startAt}&_limit=${amount}`
+		url: API.imagesUrl(amount),
 	}).then((res) => {
 		if (callback) {
 			callback(null, res.data);
 		}
+		
 	}).catch((err) => {
 		if (callback) {
 			callback(err, null);
 		}
 	});
+
 }
 
 
@@ -88,4 +92,65 @@ export function getComments(id, callback) {
 			callback(err, null);
 		}
 	});
+}
+
+
+/**
+ * Styles used by the Material UI library
+ * @param {*} theme 
+ */
+export function styles(theme) {
+	return {
+		media: {
+			height: 0,
+			paddingTop: '56.25%', // 16:9
+		},
+		modal: {
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+		},
+		paper: {
+			backgroundColor: theme.palette.background.paper,
+			boxShadow: theme.shadows[1],
+		},
+		root: {
+			position: 'fixed',
+			bottom: theme.spacing(2),
+			right: theme.spacing(2),
+		},
+		progress: {
+			margin: theme.spacing(2),
+		},
+	};
+}
+
+
+/**
+ * Formats a date into dd/mm/jjjj
+ * @param {string} string Date string 
+ */
+export function formatDate(str) {
+	const date = new Date(str);
+	var monthNames = [
+		'01', '02', '03', '04', '05', '06',
+		'07', '08', '09', '10', '11', '12',
+	];
+  
+	var day = date.getDate();
+	var monthIndex = date.getMonth();
+	var year = date.getFullYear();
+  
+	return day + '/' + monthNames[monthIndex] + '/' + year;
+}
+
+/**
+ * This function uppercases the first letter of a string.
+ * @param {string} str Any type of string with letters
+ */
+export function upperCaseFirstLetter(str) {
+	const splitted = str.split('');
+	splitted[0] = splitted[0].toUpperCase();
+
+	return splitted.join('');
 }
