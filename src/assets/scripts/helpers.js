@@ -124,3 +124,22 @@ export function styles(theme) {
 		},
 	};
 }
+
+
+/**
+ * Formats a date into dd/mm/jjjj
+ * @param {*} str Date string 
+ */
+export function formatDate(str) {
+	const date = new Date(str);
+	var monthNames = [
+		'01', '02', '03', '04', '05', '06',
+		'07', '08', '09', '10', '11', '12',
+	];
+  
+	var day = date.getDate();
+	var monthIndex = date.getMonth();
+	var year = date.getFullYear();
+  
+	return day + '/' + monthNames[monthIndex] + '/' + year;
+}

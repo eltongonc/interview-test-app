@@ -11,8 +11,8 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Grow from '@material-ui/core/Grow';
 
-import { getComments, styles } from '../assets/scripts/helpers';
-import SpringModal from './Modal';
+import { getComments, styles, formatDate } from '../assets/scripts/helpers';
+import Comments from './Comments';
 
 
 class Post extends React.Component {
@@ -50,7 +50,6 @@ class Post extends React.Component {
 
 		console.log(data);
 		
-		
 		return (
 			<Grow 
 				in={this.state.checked}
@@ -62,27 +61,29 @@ class Post extends React.Component {
 						avatar={
 							<Avatar aria-label="recipe" src={data.image.user.profile_image.medium}/>
 						}
-						
-						title={title}
-						subheader="Augustus 28, 2018"
+						title={data.image.user.name}
+						subheader={formatDate(data.image.created_at)}
 					/>
 					
 					{data.image ? 
 						<CardMedia
 							className={classes.media}
-							image={data.image.urls.small}
+							image={data.image.urls.regular}
 							title={data.image.alt_description}
 						/>
 						:
 						null
 					}
 					<CardContent>
+						<Typography variant="body1" color="textPrimary" component="p">
+							{title}
+						</Typography>
 						<Typography variant="body2" color="textSecondary" component="p">
 							{children}
 						</Typography>
 					</CardContent>
 					<CardActions disableSpacing>
-						<SpringModal clickAction={this.showComments}/>
+						<Comments clickAction={this.showComments}/>
 					</CardActions>
 
 				</Card>
