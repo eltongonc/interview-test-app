@@ -128,7 +128,7 @@ export function styles(theme) {
 
 /**
  * Formats a date into dd/mm/jjjj
- * @param {*} str Date string 
+ * @param {string} string Date string 
  */
 export function formatDate(str) {
 	const date = new Date(str);
@@ -142,4 +142,15 @@ export function formatDate(str) {
 	var year = date.getFullYear();
   
 	return day + '/' + monthNames[monthIndex] + '/' + year;
+}
+
+/**
+ * This function uppercases the first letter of a string.
+ * @param {string} str Any type of string with letters
+ */
+export function upperCaseFirstLetter(str) {
+	const splitted = str.split('');
+	splitted[0] = splitted[0].toUpperCase();
+
+	return splitted.join('');
 }

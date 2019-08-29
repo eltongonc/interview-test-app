@@ -11,7 +11,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Grow from '@material-ui/core/Grow';
 
-import { getComments, styles, formatDate } from '../assets/scripts/helpers';
+import { getComments, styles, formatDate, upperCaseFirstLetter } from '../assets/scripts/helpers';
 import Comments from './Comments';
 
 
@@ -48,8 +48,6 @@ class Post extends React.Component {
 	render() {
 		const {title, children, data, classes} = this.props;
 
-		console.log(data);
-		
 		return (
 			<Grow 
 				in={this.state.checked}
@@ -75,11 +73,11 @@ class Post extends React.Component {
 						null
 					}
 					<CardContent>
-						<Typography variant="body1" color="textPrimary" component="p">
-							{title}
+						<Typography className="post__title" variant="body2" color="textPrimary" component="h6">
+							{upperCaseFirstLetter(title)}
 						</Typography>
 						<Typography variant="body2" color="textSecondary" component="p">
-							{children}
+							{upperCaseFirstLetter(children)}
 						</Typography>
 					</CardContent>
 					<CardActions disableSpacing>
