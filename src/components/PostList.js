@@ -6,7 +6,7 @@ import { Container } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import store from '../assets/scripts/store';
+import store from '../reducers/store';
 
 import Post from './Post';
 import { getPosts } from '../assets/scripts/helpers';

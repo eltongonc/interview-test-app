@@ -11,7 +11,12 @@ import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Grow from '@material-ui/core/Grow';
 
-import { getComments, styles, formatDate, upperCaseFirstLetter } from '../assets/scripts/helpers';
+import { 
+	getComments, 
+	styles, 
+	formatDate, 
+	upperCaseFirstLetter
+} from '../assets/scripts/helpers';
 import Comments from './Comments';
 
 
@@ -80,6 +85,7 @@ class Post extends React.Component {
 							:
 							null
 					}
+
 					<CardContent>
 						<Typography className="post__title" variant="body2" color="textPrimary" component="h6">
 							{upperCaseFirstLetter(title)}
@@ -91,7 +97,6 @@ class Post extends React.Component {
 					<CardActions disableSpacing>
 						<Comments clickAction={this.showComments}/>
 					</CardActions>
-
 				</Card>
 			</Grow>
 		);

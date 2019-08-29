@@ -2,7 +2,7 @@ import React from 'react';
 import Fab from '@material-ui/core/Fab';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import store from '../assets/scripts/store';
+import store from '../reducers/store';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Header from './Header';
 import PostList from './PostList';
@@ -13,9 +13,9 @@ import ScrollTop from './ScrollTop';
 class App extends React.Component {
 	componentDidMount() {
 		/**
-		 * Load 20 post at first
+		 * Load 10 post at first
 		 */
-		getPosts(20, (err, data) => {
+		getPosts(10, (err, data) => {
 			if(err) {
 				console.log(err);
 			} else {
@@ -29,7 +29,7 @@ class App extends React.Component {
 		return (
 			<div className="app">
 				<Header/>
-				<Toolbar id="back-to-top-anchor" />
+				<Toolbar id="back-to-top-anchor"/>
 				<PostList/>
 				<ScrollTop {...this.props}>
 					<Fab color="secondary" size="small" aria-label="scroll back to top">

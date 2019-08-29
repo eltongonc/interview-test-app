@@ -1,6 +1,6 @@
-/* eslint-disable react/prop-types */
-
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -16,7 +16,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import Fade from '@material-ui/core/Fade';
 
 import { styles } from '../assets/scripts/helpers';
-
 
 class Comments extends React.Component {
 	constructor(props) {
@@ -42,17 +41,11 @@ class Comments extends React.Component {
 	}
 
 	handleOpen() {
-		this.setState({
-			setOpen: true,
-			open: true,
-		});
+		this.setState({ open: true });
 	}
 
 	handleClose() {
-		this.setState({
-			setOpen: false,
-			open: false,
-		});
+		this.setState({ open: false });
 	}
 
 	generateComments() {
@@ -78,6 +71,7 @@ class Comments extends React.Component {
 
 	render() {
 		const { classes } = this.props;
+
 		return (
 			<div className="comments">
 				<IconButton onClick={this.handleOpen} aria-label="share">
@@ -111,5 +105,10 @@ class Comments extends React.Component {
 		);
 	}
 }
+
+Comments.propTypes = {
+	classes: PropTypes.object,
+	clickAction: PropTypes.func.isRequired,
+};
 
 export default withStyles(styles)(Comments);
