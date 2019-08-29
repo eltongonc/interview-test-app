@@ -1,7 +1,6 @@
-/* eslint-disable react/prop-types */
-
 import React from 'react';
-import { useSpring, animated } from 'react-spring';
+import PropTypes from 'prop-types';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -14,45 +13,11 @@ import Backdrop from '@material-ui/core/Backdrop';
 import IconButton from '@material-ui/core/IconButton';
 import CommentIcon from '@material-ui/icons/Comment';
 import CloseIcon from '@material-ui/icons/Close';
+import Fade from '@material-ui/core/Fade';
 
+import { styles } from '../assets/scripts/helpers';
 
-const styles = theme => ({
-	modal: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	paper: {
-		backgroundColor: theme.palette.background.paper,
-		boxShadow: theme.shadows[1],
-	},
-});
-
-const Fade = React.forwardRef(function Fade(props, ref) {
-	const { in: open, children, onEnter, onExited, ...other } = props;
-	const style = useSpring({
-		from: { opacity: 0 },
-		to: { opacity: open ? 1 : 0 },
-		onStart: () => {
-			if (open && onEnter) {
-				onEnter();
-			}
-		},
-		onRest: () => {
-			if (!open && onExited) {
-				onExited();
-			}
-		},
-	});
-
-	return (
-		<animated.div ref={ref} style={style} {...other}>
-			{children}
-		</animated.div>
-	);
-});
-
-class SpringModal extends React.Component {
+class Comments extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -76,17 +41,11 @@ class SpringModal extends React.Component {
 	}
 
 	handleOpen() {
-		this.setState({
-			setOpen: true,
-			open: true,
-		});
+		this.setState({ open: true });
 	}
 
 	handleClose() {
-		this.setState({
-			setOpen: false,
-			open: false,
-		});
+		this.setState({ open: false });
 	}
 
 	generateComments() {
@@ -112,15 +71,17 @@ class SpringModal extends React.Component {
 
 	render() {
 		const { classes } = this.props;
+
 		return (
-			<div className="modal-wrapper">
+			<div className="comments">
 				<IconButton onClick={this.handleOpen} aria-label="share">
 					<CommentIcon />
 				</IconButton>
+
 				<Modal
 					aria-labelledby="spring-modal-title"
 					aria-describedby="spring-modal-description"
-					className={'modal ' + classes.modal}
+					className={'comments__modal ' + classes.modal}
 					open={this.state.open}
 					onClose={this.handleClose}
 					closeAfterTransition
@@ -130,12 +91,14 @@ class SpringModal extends React.Component {
 					}}
 				>
 					<Fade in={this.state.open}>
-						<IconButton className="close-button" onClick={this.handleClose} aria-label="share">
-							<CloseIcon />
-						</IconButton>
-						<List className={'modal__list ' + classes.paper}>
-							{this.generateComments()}
-						</List>
+						<div className="modal__inner">
+							<IconButton className="close-button" onClick={this.handleClose} aria-label="share">
+								<CloseIcon />
+							</IconButton>
+							<List className={'modal__list ' + classes.paper}>
+								{this.generateComments()}
+							</List>
+						</div>
 					</Fade>
 				</Modal>
 			</div>
@@ -143,4 +106,9 @@ class SpringModal extends React.Component {
 	}
 }
 
-export default withStyles(styles)(SpringModal);
+Comments.propTypes = {
+	classes: PropTypes.object,
+	clickAction: PropTypes.func.isRequired,
+};
+
+export default withStyles(styles)(Comments);

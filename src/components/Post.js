@@ -9,20 +9,24 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
+import Grow from '@material-ui/core/Grow';
 
-import { getComments } from '../assets/scripts/helpers';
-import SpringModal from './Modal';
+import { 
+	getComments, 
+	styles, 
+	formatDate, 
+	upperCaseFirstLetter
+} from '../assets/scripts/helpers';
+import Comments from './Comments';
 
-const styles = theme => ({
-	media: {
-		height: 0,
-		paddingTop: '56.25%', // 16:9
-	}
-});
 
 class Post extends React.Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			checked: false,
+		};
 
 		this.showComments = this.showComments.bind(this);
 	}
@@ -40,39 +44,61 @@ class Post extends React.Component {
 		});
 	}
 
+	componentDidMount() {
+		this.setState({
+			checked: true,
+		});
+	}
+
 	render() {
 		const {title, children, data, classes} = this.props;
-		
-		return (
-			<Card className="post">
-				<CardHeader
-					avatar={
-						<Avatar aria-label="recipe">{data.id}</Avatar>
-					}
-					
-					title={title}
-					subheader="September 14, 2016"
-				/>
-				
-				{data.image ? 
-					<CardMedia
-						className={classes.media}
-						image={data.image.url}
-						title={data.image.title}
-					/>
-					:
-					null
-				}
-				<CardContent>
-					<Typography variant="body2" color="textSecondary" component="p">
-						{children}
-					</Typography>
-				</CardContent>
-				<CardActions disableSpacing>
-					<SpringModal clickAction={this.showComments}/>
-				</CardActions>
+		const staggerBy = this.state.checked ? { timeout: 1000 } : {};
 
-			</Card>
+		return (
+			<Grow 
+				in={this.state.checked}
+				style={{ transformOrigin: 'top center' }}
+				{...staggerBy}
+			>
+				<Card className="post" elevation={0}>
+					<CardHeader className="post__header"
+						avatar={
+							<Avatar aria-label="recipe" src={data.image.user.profile_image.medium}/>
+						}
+						title={
+							<a href={data.image.user.links.html} target="_blank" rel="noopener noreferrer">
+								{data.image.user.name}
+							</a>
+						}
+						subheader={formatDate(data.image.created_at)}
+					/>
+					
+					{
+						data.image ? 
+							<a href={data.image.urls.full} target="_blank" rel="noopener noreferrer">
+								<CardMedia
+									className={classes.media}
+									image={data.image.urls.regular}
+									title={data.image.alt_description}
+								/>
+							</a>
+							:
+							null
+					}
+
+					<CardContent>
+						<Typography className="post__title" variant="body2" color="textPrimary" component="h6">
+							{upperCaseFirstLetter(title)}
+						</Typography>
+						<Typography variant="body2" color="textSecondary" component="p">
+							{upperCaseFirstLetter(children)}
+						</Typography>
+					</CardContent>
+					<CardActions disableSpacing>
+						<Comments clickAction={this.showComments}/>
+					</CardActions>
+				</Card>
+			</Grow>
 		);
 	}
 }

@@ -13,7 +13,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function ScrollTop(props) {
-	const { children } = props;
 	const classes = useStyles();
 	
 	const trigger = useScrollTrigger({
@@ -21,7 +20,7 @@ export default function ScrollTop(props) {
 		threshold: 100,
 	});
   
-	const handleClick = event => {
+	const handleClick = () => {
 		const anchor = document.getElementById('back-to-top-anchor');
 
 		if (anchor) {
@@ -31,8 +30,8 @@ export default function ScrollTop(props) {
   
 	return (
 		<Zoom in={trigger}>
-			<div onClick={handleClick} role="presentation" className={classes.root}>
-				{children}
+			<div onClick={handleClick} role="presentation" className={'to-top ' + classes.root}>
+				{props.children}
 			</div>
 		</Zoom>
 	);
