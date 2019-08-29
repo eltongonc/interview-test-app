@@ -47,30 +47,38 @@ class Post extends React.Component {
 
 	render() {
 		const {title, children, data, classes} = this.props;
+		const staggerBy = this.state.checked ? { timeout: 1000 } : {};
 
 		return (
 			<Grow 
 				in={this.state.checked}
 				style={{ transformOrigin: 'top center' }}
-				{...(this.state.checked ? { timeout: 1000 } : {})}
+				{...staggerBy}
 			>
 				<Card className="post" elevation={0}>
-					<CardHeader
+					<CardHeader className="post__header"
 						avatar={
 							<Avatar aria-label="recipe" src={data.image.user.profile_image.medium}/>
 						}
-						title={data.image.user.name}
+						title={
+							<a href={data.image.user.links.html} target="_blank" rel="noopener noreferrer">
+								{data.image.user.name}
+							</a>
+						}
 						subheader={formatDate(data.image.created_at)}
 					/>
 					
-					{data.image ? 
-						<CardMedia
-							className={classes.media}
-							image={data.image.urls.regular}
-							title={data.image.alt_description}
-						/>
-						:
-						null
+					{
+						data.image ? 
+							<a href={data.image.urls.full} target="_blank" rel="noopener noreferrer">
+								<CardMedia
+									className={classes.media}
+									image={data.image.urls.regular}
+									title={data.image.alt_description}
+								/>
+							</a>
+							:
+							null
 					}
 					<CardContent>
 						<Typography className="post__title" variant="body2" color="textPrimary" component="h6">

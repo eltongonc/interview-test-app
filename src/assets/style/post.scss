@@ -9,6 +9,17 @@
 		max-width: 38rem;
 		margin: 1rem auto;
 
+		.post__header {
+			a {
+				text-decoration: none;
+				color: inherit;
+				transition: color .3s ease-in-out;
+
+				&:hover {
+					color: $red;
+				}
+			}
+		}
 		.post__title {
 			margin-bottom: .5rem;
 			font-weight: bold;
