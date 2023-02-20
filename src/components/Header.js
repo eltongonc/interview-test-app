@@ -7,9 +7,7 @@ function Header() {
 	return (
 		<AppBar className="header" elevation={0}>
 			<Toolbar>
-				<Typography variant="h6">
-					Interview demo app
-				</Typography>
+				<Typography variant="h6">Interview demo app</Typography>
 			</Toolbar>
 		</AppBar>
 	);

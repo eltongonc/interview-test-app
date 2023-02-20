@@ -7,13 +7,14 @@ const BASE_URL = 'https://jsonplaceholder.typicode.com';
  * Client id will be removed after a week
  */
 export const API = {
-	imagesUrl(count) { return `https://api.unsplash.com/photos/random?count=${count}&client_id=a670cd3f5fc5db92e41bcb7a248ff4cfa140256d4a70f752403bad58bc17362d`; },
+	imagesUrl(count) {
+		return `https://api.unsplash.com/photos/random?count=${count}&client_id=a670cd3f5fc5db92e41bcb7a248ff4cfa140256d4a70f752403bad58bc17362d`;
+	},
 	postsUrl: `${BASE_URL}/posts/`,
 	commentsUrl: `${BASE_URL}/comments/`,
 	userUrl: `${BASE_URL}/user/`,
 	startAt: 0,
 };
-
 
 /**
  * This function will call the api and get n amount of posts
@@ -22,57 +23,56 @@ export const API = {
 export function getPosts(amount, callback) {
 	axios({
 		method: 'GET',
-		url: `${API.postsUrl}?_start=${API.startAt}&_limit=${amount}`
-	}).then((res) => {
-		getImages(amount, (err, data) => {
-			if(err) {
-				console.log(err);
-			} else {
-				res.data = res.data.reduce((result, post, i) => {
-					const postImg = data[i];
-					post.image = postImg;
+		url: `${API.postsUrl}?_start=${API.startAt}&_limit=${amount}`,
+	})
+		.then((res) => {
+			getImages(amount, (err, data) => {
+				if (err) {
+					console.log(err);
+				} else {
+					res.data = res.data.reduce((result, post, i) => {
+						const postImg = data[i];
+						post.image = postImg;
 
-					result.push(post);
-					return result;
-				}, []);
+						result.push(post);
+						return result;
+					}, []);
 
-				if (callback) {
-					callback(null, res.data);
+					if (callback) {
+						callback(null, res.data);
+					}
+
+					API.startAt += amount;
 				}
-
-				API.startAt += amount;
+			});
+		})
+		.catch((err) => {
+			if (callback) {
+				callback(err, null);
 			}
 		});
-	}).catch((err) => {
-		if (callback) {
-			callback(err, null);
-		}
-	});
 }
-
 
 /**
  * This function will call the api and get n amount of posts
  * @param {function} callback a function that will return the data or an error
  */
 export function getImages(amount, callback) {
-
 	axios({
 		method: 'GET',
 		url: API.imagesUrl(amount),
-	}).then((res) => {
-		if (callback) {
-			callback(null, res.data);
-		}
-		
-	}).catch((err) => {
-		if (callback) {
-			callback(err, null);
-		}
-	});
-
+	})
+		.then((res) => {
+			if (callback) {
+				callback(null, res.data);
+			}
+		})
+		.catch((err) => {
+			if (callback) {
+				callback(err, null);
+			}
+		});
 }
-
 
 /**
  * This function gets all the comments from a post
@@ -82,22 +82,23 @@ export function getImages(amount, callback) {
 export function getComments(id, callback) {
 	axios({
 		method: 'GET',
-		url: `${API.commentsUrl}?postId=${id}`
-	}).then((res) => {
-		if (callback) {
-			callback(null, res.data);
-		}
-	}).catch((err) => {
-		if (callback) {
-			callback(err, null);
-		}
-	});
+		url: `${API.commentsUrl}?postId=${id}`,
+	})
+		.then((res) => {
+			if (callback) {
+				callback(null, res.data);
+			}
+		})
+		.catch((err) => {
+			if (callback) {
+				callback(err, null);
+			}
+		});
 }
-
 
 /**
  * Styles used by the Material UI library
- * @param {*} theme 
+ * @param {*} theme
  */
 export function styles(theme) {
 	return {
@@ -125,22 +126,31 @@ export function styles(theme) {
 	};
 }
 
-
 /**
  * Formats a date into dd/mm/jjjj
- * @param {string} string Date string 
+ * @param {string} string Date string
  */
 export function formatDate(str) {
 	const date = new Date(str);
 	var monthNames = [
-		'01', '02', '03', '04', '05', '06',
-		'07', '08', '09', '10', '11', '12',
+		'01',
+		'02',
+		'03',
+		'04',
+		'05',
+		'06',
+		'07',
+		'08',
+		'09',
+		'10',
+		'11',
+		'12',
 	];
-  
+
 	var day = date.getDate();
 	var monthIndex = date.getMonth();
 	var year = date.getFullYear();
-  
+
 	return day + '/' + monthNames[monthIndex] + '/' + year;
 }
 

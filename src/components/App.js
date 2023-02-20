@@ -16,21 +16,19 @@ class App extends React.Component {
 		 * Load 10 post at first
 		 */
 		getPosts(10, (err, data) => {
-			if(err) {
+			if (err) {
 				console.log(err);
 			} else {
-				store.dispatch(
-					setPosts(data)
-				);
+				store.dispatch(setPosts(data));
 			}
 		});
 	}
 	render() {
 		return (
 			<div className="app">
-				<Header/>
-				<Toolbar id="back-to-top-anchor"/>
-				<PostList/>
+				<Header />
+				<Toolbar id="back-to-top-anchor" />
+				<PostList />
 				<ScrollTop {...this.props}>
 					<Fab color="secondary" size="small" aria-label="scroll back to top">
 						<KeyboardArrowUpIcon />
@@ -40,6 +38,5 @@ class App extends React.Component {
 		);
 	}
 }
-
 
 export default App;

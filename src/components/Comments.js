@@ -34,7 +34,7 @@ class Comments extends React.Component {
 		if (this.props.clickAction) {
 			this.props.clickAction((data) => {
 				this.setState({
-					data
+					data,
 				});
 			});
 		}
@@ -50,20 +50,26 @@ class Comments extends React.Component {
 
 	generateComments() {
 		return this.state.data.map((comment, i) => {
-			return <ListItem key={i} className="comment">
-				<ListItemAvatar>
-					<Avatar>{comment.id}</Avatar>
-				</ListItemAvatar>
-				<ListItemText className="modal__text" primary={comment.name} secondary={comment.body} />
-			</ListItem>;
+			return (
+				<ListItem key={i} className="comment">
+					<ListItemAvatar>
+						<Avatar>{comment.id}</Avatar>
+					</ListItemAvatar>
+					<ListItemText
+						className="modal__text"
+						primary={comment.name}
+						secondary={comment.body}
+					/>
+				</ListItem>
+			);
 		});
 	}
-	
+
 	UNSAFE_componentWillReceiveProps() {
-		if(this.props.clickAction) {
+		if (this.props.clickAction) {
 			this.props.clickAction((data) => {
 				this.setState({
-					data
+					data,
 				});
 			});
 		}
@@ -92,7 +98,11 @@ class Comments extends React.Component {
 				>
 					<Fade in={this.state.open}>
 						<div className="modal__inner">
-							<IconButton className="close-button" onClick={this.handleClose} aria-label="share">
+							<IconButton
+								className="close-button"
+								onClick={this.handleClose}
+								aria-label="share"
+							>
 								<CloseIcon />
 							</IconButton>
 							<List className={'modal__list ' + classes.paper}>
