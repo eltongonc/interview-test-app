@@ -1,9 +1,8 @@
 .post-list {
-	margin-bottom: 1rem;
 	display: flex;
 	flex-direction: column;
-	align-content: center;
-	background-color: $light-grey;
+	margin-bottom: 1rem;
+	padding-bottom: 2rem;
 
 	.post {
 		max-width: 38rem;
@@ -13,7 +12,7 @@
 			a {
 				text-decoration: none;
 				color: inherit;
-				transition: color .3s ease-in-out;
+				transition: color 0.3s ease-in-out;
 
 				&:hover {
 					color: $red;
@@ -21,29 +20,28 @@
 			}
 		}
 		.post__title {
-			margin-bottom: .5rem;
+			margin-bottom: 0.5rem;
 			font-weight: bold;
 		}
 	}
-	
+
 	.loader {
 		align-self: center;
 		justify-self: center;
 		margin-top: 1rem;
 	}
-	
 
 	.more-button {
 		width: 100%;
 		max-width: 38rem;
 		margin: 0 auto;
 		justify-self: center;
-		background-color: $dark-grey
+		// background-color: $dark-grey;
 	}
 
-	+.to-top {
+	+ .to-top {
 		button {
-			background-color: $dark-grey
+			background-color: $dark-grey;
 		}
 	}
 }
